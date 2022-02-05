@@ -1,4 +1,4 @@
-package com.idleoffice.harvesthelper.ui.plantlist
+package com.idleoffice.harvesthelper.ui.screen.plantlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.idleoffice.harvesthelper.ui.plantlist
+package com.idleoffice.harvesthelper.ui.screen.plantlist
 
 import com.idleoffice.harvesthelper.model.plants.Plant
 

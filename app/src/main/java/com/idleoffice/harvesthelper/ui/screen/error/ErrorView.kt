@@ -1,4 +1,4 @@
-package com.idleoffice.harvesthelper.ui.error
+package com.idleoffice.harvesthelper.ui.screen.error
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

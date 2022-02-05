@@ -1,4 +1,4 @@
-package com.idleoffice.harvesthelper.ui.plantlist
+package com.idleoffice.harvesthelper.ui.screen.plantlist
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.idleoffice.harvesthelper.model.plants.Plant
-import com.idleoffice.harvesthelper.ui.error.ErrorView
-import com.idleoffice.harvesthelper.ui.loading.LoadingView
+import com.idleoffice.harvesthelper.ui.screen.error.ErrorView
+import com.idleoffice.harvesthelper.ui.screen.loading.LoadingView
 import com.idleoffice.harvesthelper.ui.theme.HarvestHelperTheme
 
 @Composable

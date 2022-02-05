@@ -19,7 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.idleoffice.harvesthelper.nav.AppDestinations
-import com.idleoffice.harvesthelper.ui.plantlist.PlantsListScreen
+import com.idleoffice.harvesthelper.ui.screen.plantlist.PlantsListScreen
 import com.idleoffice.harvesthelper.ui.theme.HarvestHelperTheme
 import dagger.hilt.android.AndroidEntryPoint
 
