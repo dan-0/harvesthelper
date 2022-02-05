@@ -19,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.idleoffice.harvesthelper.nav.AppDestinations
+import com.idleoffice.harvesthelper.ui.screen.plantdetails.PlantDetailsScreen
 import com.idleoffice.harvesthelper.ui.screen.plantlist.PlantsListScreen
 import com.idleoffice.harvesthelper.ui.theme.HarvestHelperTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,9 +61,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.padding(innerPadding),
                 ) {
 
-                    composable(AppDestinations.PlantsList) { backStackEntry, destination ->
+                    composable(AppDestinations.PlantsList) { _, destination ->
                         updateTitle(stringResource(destination.title))
-                        PlantsListScreen()
+                        PlantsListScreen {
+                            navController.navigate(AppDestinations.PlantDetails.buildRoute(it))
+                        }
+                    }
+                    
+                    composable(AppDestinations.PlantDetails) { backStackEntry, destination ->
+                        updateTitle(stringResource(destination.title))
+                        PlantDetailsScreen(plantId = destination.itemIdFromNav(backStackEntry))
                     }
                 }
 

@@ -1,4 +1,4 @@
-package com.idleoffice.harvesthelper.di.modules
+package com.idleoffice.harvesthelper.di.modules.database
 
 import android.app.Application
 import androidx.room.Room
