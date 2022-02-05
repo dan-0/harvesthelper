@@ -23,7 +23,7 @@ import com.idleoffice.harvesthelper.ui.loading.LoadingView
 import com.idleoffice.harvesthelper.ui.theme.HarvestHelperTheme
 
 @Composable
-fun PlantsListView(viewModel: PlantsViewModel = hiltViewModel()) {
+fun PlantsListScreen(viewModel: PlantsViewModel = hiltViewModel()) {
 
     val state = viewModel.state.collectAsState(initial = PlantsViewState.Loading)
 

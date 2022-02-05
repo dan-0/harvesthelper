@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Harvest Helper</string>
+    <string name="plants_list">Plants List</string>
 </resources>
