@@ -1,6 +1,6 @@
 package com.idleoffice.harvesthelper.ui.plantlist
 
-import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,12 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberImagePainter
 import com.idleoffice.harvesthelper.model.plants.Plant
 import com.idleoffice.harvesthelper.ui.error.ErrorView
 import com.idleoffice.harvesthelper.ui.loading.LoadingView
@@ -54,15 +53,17 @@ private fun PlantListItem(it: Plant) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val file = LocalContext.current.assets.open("raw/${it.image}")
-
-            val bitmap = BitmapFactory.decodeStream(file)
-            Image(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = it.description,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.height(200.dp)
-            )
+            if (it.image != null) {
+                val uri = Uri.parse(
+                    "android.resource://com.idleoffice.harvesthelper/raw/${it.image.substringBeforeLast(".")}"
+                )
+                Image(
+                    painter = rememberImagePainter(uri),
+                    contentDescription = it.description,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.height(200.dp)
+                )
+            }
             Text(text = it.name)
         }
     }
