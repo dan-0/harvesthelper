@@ -1,7 +1,6 @@
-package com.idleoffice.harvesthelper.model.di
+package com.idleoffice.harvesthelper.di.modules
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import com.idleoffice.harvesthelper.model.AppDatabase
 import dagger.Module
@@ -21,6 +20,7 @@ class DatabaseModule {
             "Plants.db"
         )
             .createFromAsset("database/plants.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.idleoffice.harvesthelper.model.plants.Plant
 import com.idleoffice.harvesthelper.model.plants.PlantDao
 
-@Database(entities = [Plant::class], version = 1)
+@Database(entities = [Plant::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun plantDao(): PlantDao
 }
