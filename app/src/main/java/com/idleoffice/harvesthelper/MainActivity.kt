@@ -15,12 +15,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.idleoffice.harvesthelper.nav.AppDestinations
 import com.idleoffice.harvesthelper.ui.screen.plantdetails.PlantDetailsScreen
 import com.idleoffice.harvesthelper.ui.screen.plantlist.PlantsListScreen
+import com.idleoffice.harvesthelper.ui.screen.plantlist.PlantsListScreenIntent
 import com.idleoffice.harvesthelper.ui.theme.HarvestHelperTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,7 +66,7 @@ class MainActivity : ComponentActivity() {
                     composable(AppDestinations.PlantsList) { _, destination ->
                         updateTitle(stringResource(destination.title))
                         PlantsListScreen {
-                            navController.navigate(AppDestinations.PlantDetails.buildRoute(it))
+                            plantListScreenNavigator(it, navController)
                         }
                     }
                     
@@ -85,6 +87,19 @@ class MainActivity : ComponentActivity() {
     ) {
         composable(destination.routeTemplate) {
             content(it, destination)
+        }
+    }
+
+    private fun plantListScreenNavigator(
+        intent: PlantsListScreenIntent,
+        navController: NavHostController
+    ) {
+        when (intent) {
+            is PlantsListScreenIntent.OpenPlantDescription -> {
+                navController.navigate(
+                    AppDestinations.PlantDetails.buildRoute(intent.id)
+                )
+            }
         }
     }
 }

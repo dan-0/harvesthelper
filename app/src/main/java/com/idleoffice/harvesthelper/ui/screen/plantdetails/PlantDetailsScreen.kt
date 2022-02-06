@@ -17,9 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.idleoffice.harvesthelper.R
-import com.idleoffice.harvesthelper.ui.screen.error.ErrorView
+import com.idleoffice.harvesthelper.ui.screen.error.ErrorScreen
 import com.idleoffice.harvesthelper.ui.screen.image.PlantImage
-import com.idleoffice.harvesthelper.ui.screen.loading.LoadingView
+import com.idleoffice.harvesthelper.ui.screen.loading.LoadingScreen
 import com.idleoffice.harvesthelper.ui.screen.plantdetails.data.PlantDetailsData
 import com.idleoffice.harvesthelper.ui.screen.plantdetails.data.PlantDetailsViewState
 
@@ -31,11 +31,11 @@ fun PlantDetailsScreen(
 
     when (val state = vm.state.collectAsState(initial = PlantDetailsViewState.Init).value) {
         is PlantDetailsViewState.Content -> PlantDetailsView(state.plant)
-        PlantDetailsViewState.Error -> ErrorView()
-        PlantDetailsViewState.Loading -> LoadingView()
+        PlantDetailsViewState.Error -> ErrorScreen()
+        PlantDetailsViewState.Loading -> LoadingScreen()
         PlantDetailsViewState.Init -> {
             vm.loadPlantData(plantId)
-            LoadingView()
+            LoadingScreen()
         }
     }
 }

@@ -17,7 +17,7 @@ class DatabaseModule {
         return Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "Plants.db"
+            "Plants.db",
         )
             .createFromAsset("database/plants.db")
             .build()

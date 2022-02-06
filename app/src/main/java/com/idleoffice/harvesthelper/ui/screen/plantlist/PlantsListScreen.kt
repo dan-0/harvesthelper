@@ -10,34 +10,35 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.idleoffice.harvesthelper.ui.screen.error.ErrorView
+import com.idleoffice.harvesthelper.ui.screen.error.ErrorScreen
 import com.idleoffice.harvesthelper.ui.screen.image.PlantImage
-import com.idleoffice.harvesthelper.ui.screen.loading.LoadingView
+import com.idleoffice.harvesthelper.ui.screen.loading.LoadingScreen
 import com.idleoffice.harvesthelper.ui.screen.plantlist.data.PlantListData
 import com.idleoffice.harvesthelper.ui.screen.plantlist.data.PlantsViewState
 import com.idleoffice.harvesthelper.ui.theme.HarvestHelperTheme
 
-private typealias NavigateToPlant = (Int) -> Unit
+private typealias NavigateToPlant = (PlantsListScreenIntent) -> Unit
 
 @Composable
 fun PlantsListScreen(
-    viewModel: PlantsViewModel = hiltViewModel(),
-    navigateToPlantId: (Int) -> Unit
+    vm: PlantsViewModel = hiltViewModel(),
+    state: State<PlantsViewState> = vm.state.collectAsState(initial = PlantsViewState.Loading),
+    navigateToPlantId: (PlantsListScreenIntent) -> Unit
 ) {
-
-    val state = viewModel.state.collectAsState(initial = PlantsViewState.Loading)
 
     when (val value = state.value) {
         is PlantsViewState.Content -> PlantsListContentView(value, navigateToPlantId)
-        PlantsViewState.Error -> ErrorView()
-        PlantsViewState.Loading -> LoadingView()
+        PlantsViewState.Error -> ErrorScreen()
+        PlantsViewState.Loading -> LoadingScreen()
     }
+
 }
 
 @Composable
@@ -61,14 +62,16 @@ private fun PlantListItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(15.dp)
-            .clickable { navigateToPlantId(it.id) },
+            .clickable {
+                navigateToPlantId(PlantsListScreenIntent.OpenPlantDescription(it.id))
+            },
         elevation = 2.dp,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (it.image != null) {
-                PlantImage(it.image, it.image)
+                PlantImage(it.image, it.description)
             }
             Text(text = it.name)
         }
@@ -77,7 +80,7 @@ private fun PlantListItem(
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun PlantsListScreenPreview() {
     val previewPlant = PlantListData(
         id = 0,
         name = "Test plant",
@@ -87,4 +90,12 @@ fun DefaultPreview() {
     HarvestHelperTheme {
         PlantsListContentView(PlantsViewState.Content(listOf(previewPlant))) {}
     }
+}
+
+sealed class PlantsListScreenIntent {
+
+    data class OpenPlantDescription(
+        val id: Int
+    ) : PlantsListScreenIntent()
+
 }
