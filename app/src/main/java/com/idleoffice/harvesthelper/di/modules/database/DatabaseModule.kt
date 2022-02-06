@@ -20,7 +20,6 @@ class DatabaseModule {
             "Plants.db"
         )
             .createFromAsset("database/plants.db")
-            .fallbackToDestructiveMigration()
             .build()
     }
 

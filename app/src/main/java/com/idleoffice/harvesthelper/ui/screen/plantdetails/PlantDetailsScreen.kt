@@ -104,5 +104,8 @@ private fun TitleAndData(@StringRes title: Int, name: String) {
 
 private fun LazyListScope.addTitleAndDataItem(@StringRes title: Int, name: String?) {
     if (name.isNullOrEmpty()) return
-    item { TitleAndData(title = title, name = name) }
+
+    item {
+        TitleAndData(title = title, name = name)
+    }
 }

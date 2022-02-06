@@ -2,7 +2,8 @@ package com.idleoffice.harvesthelper.ui.screen.plantdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.idleoffice.harvesthelper.model.AppDatabase
+import com.idleoffice.harvesthelper.di.modules.dispatchers.DispatcherProvider
+import com.idleoffice.harvesthelper.model.plants.PlantDao
 import com.idleoffice.harvesthelper.ui.screen.plantdetails.data.PlantDetailsData
 import com.idleoffice.harvesthelper.ui.screen.plantdetails.data.PlantDetailsViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlantDetailViewModel @Inject constructor(
-    private val db: AppDatabase
+    private val plantDao: PlantDao,
+    private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<PlantDetailsViewState>(PlantDetailsViewState.Init)
@@ -21,8 +23,8 @@ class PlantDetailViewModel @Inject constructor(
 
     fun loadPlantData(plantId: Int) {
         _state.value = PlantDetailsViewState.Loading
-        viewModelScope.launch {
-            val plantDto = db.plantDao().getPlant(plantId)
+        viewModelScope.launch(dispatchers.io) {
+            val plantDto = plantDao.getPlant(plantId)
 
             val plantDetails = plantDto?.let {
                 PlantDetailsData(
