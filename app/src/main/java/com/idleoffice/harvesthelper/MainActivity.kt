@@ -63,14 +63,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.padding(innerPadding),
                 ) {
 
-                    composable(AppDestinations.PlantsList) { _, destination ->
+                    composableDestination(AppDestinations.PlantsList) { _, destination ->
                         updateTitle(stringResource(destination.title))
                         PlantsListScreen {
                             plantListScreenNavigator(it, navController)
                         }
                     }
                     
-                    composable(AppDestinations.PlantDetails) { backStackEntry, destination ->
+                    composableDestination(AppDestinations.PlantDetails) { backStackEntry, destination ->
                         updateTitle(stringResource(destination.title))
                         PlantDetailsScreen(plantId = destination.itemIdFromNav(backStackEntry))
                     }
@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
 
     }
 
-    private fun <T : AppDestinations> NavGraphBuilder.composable(
+    private fun <T : AppDestinations> NavGraphBuilder.composableDestination(
         destination: T,
         content: @Composable (backStackEntry: NavBackStackEntry, destination: T) -> Unit
     ) {
