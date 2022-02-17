@@ -12,17 +12,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.idleoffice.harvesthelper.ui.component.search.SearchView
 import com.idleoffice.harvesthelper.ui.screen.error.ErrorScreen
 import com.idleoffice.harvesthelper.ui.screen.image.PlantImage
 import com.idleoffice.harvesthelper.ui.screen.loading.LoadingScreen
 import com.idleoffice.harvesthelper.ui.screen.plantlist.data.PlantListData
 import com.idleoffice.harvesthelper.ui.screen.plantlist.data.PlantsViewState
-import com.idleoffice.harvesthelper.ui.theme.HarvestHelperTheme
 
 private typealias NavigateToPlant = (PlantsListScreenIntent) -> Unit
 
@@ -46,11 +48,37 @@ private fun PlantsListContentView(
     content: PlantsViewState.Content,
     navigateToPlantId: NavigateToPlant
 ) {
+
+    val textFieldValue = rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(TextFieldValue(""))
+    }
+
+    val plants = filterPlants(textFieldValue.value.text, content)
+
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(content.plants) {
+        item {
+            SearchView(state = textFieldValue)
+        }
+        items(plants) {
             PlantListItem(it, navigateToPlantId)
         }
     }
+}
+
+private fun filterPlants(
+    rawFilterString: String,
+    content: PlantsViewState.Content
+): List<PlantListData> {
+    val searchText = rawFilterString.lowercase()
+
+    val plants = if (searchText.isEmpty()) {
+        content.plants
+    } else {
+        content.plants.filter {
+            it.name.lowercase().contains(searchText)
+        }
+    }
+    return plants
 }
 
 @Composable
@@ -75,20 +103,6 @@ private fun PlantListItem(
             }
             Text(text = it.name)
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PlantsListScreenPreview() {
-    val previewPlant = PlantListData(
-        id = 0,
-        name = "Test plant",
-        description = "Don't eat me please",
-        image = null
-    )
-    HarvestHelperTheme {
-        PlantsListContentView(PlantsViewState.Content(listOf(previewPlant))) {}
     }
 }
 

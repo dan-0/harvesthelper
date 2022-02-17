@@ -23,7 +23,7 @@ fun PlantImage(
         "android.resource://com.idleoffice.harvesthelper/raw/${image.substringBeforeLast(".")}"
     Box(
         modifier = Modifier
-            .background(Color.Gray)
+            .background(Color.Transparent)
             .height(200.dp)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center

@@ -1,6 +1,7 @@
 package com.idleoffice.harvesthelper.ui.screen.plantlist
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -81,7 +82,7 @@ class PlantsListScreenTest {
         // given
         composeTestRule.setContent {
             PlantsListScreen(
-                state = mutableStateOf(TEST_CONTENT),
+                state = remember { mutableStateOf(TEST_CONTENT) },
                 navigateToPlantId = {}
             )
         }
@@ -114,7 +115,7 @@ class PlantsListScreenTest {
         var lastIntent: PlantsListScreenIntent? = null
         composeTestRule.setContent {
             PlantsListScreen(
-                state = mutableStateOf(TEST_CONTENT),
+                state = remember { mutableStateOf(TEST_CONTENT) },
                 navigateToPlantId = {
                     lastIntent = it
                 }
@@ -135,7 +136,9 @@ class PlantsListScreenTest {
         // given
         composeTestRule.setContent {
             PlantsListScreen(
-                state = mutableStateOf(PlantsViewState.Loading),
+                state = remember {
+                    mutableStateOf(PlantsViewState.Loading)
+                },
                 navigateToPlantId = {}
             )
         }
@@ -149,7 +152,9 @@ class PlantsListScreenTest {
         // given
         composeTestRule.setContent {
             PlantsListScreen(
-                state = mutableStateOf(PlantsViewState.Error),
+                state = remember {
+                    mutableStateOf(PlantsViewState.Error)
+                                 },
                 navigateToPlantId = {}
             )
         }

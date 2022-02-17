@@ -20,4 +20,6 @@
     <string name="storage_use">Storage Use</string>
     <string name="loading">Loading</string>
     <string name="error">Error</string>
+    <string name="search">Search</string>
+    <string name="close">Close</string>
 </resources>
