@@ -6,14 +6,14 @@ import com.idleoffice.harvesthelper.test.util.BaseUnitTest
 import com.idleoffice.harvesthelper.ui.screen.plantlist.data.PlantListData
 import com.idleoffice.harvesthelper.ui.screen.plantlist.data.PlantsViewState
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class PlantsViewModelTest : BaseUnitTest(){
 
     @RelaxedMockK

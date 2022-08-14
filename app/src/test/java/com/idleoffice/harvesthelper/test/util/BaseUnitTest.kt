@@ -1,8 +1,11 @@
 package com.idleoffice.harvesthelper.test.util
 
 import io.mockk.MockKAnnotations
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -44,6 +47,10 @@ open class BaseUnitTest {
         }
     }
 
+    /**
+     * Converts a [Flow] to a [List] that is updated as the target [Flow] emits data. Helpful for
+     * more easily verifying a series of state events as the occur.
+     */
     fun <T> Flow<T>.toLiveList(): List<T> {
         val mutableList = mutableListOf<T>()
         _internalBaseScope.launch {
